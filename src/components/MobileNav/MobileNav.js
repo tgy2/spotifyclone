@@ -2,9 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ListIcon from '@mui/icons-material/List';
+import { Link } from 'react-router-dom';
 
 const MobileNav = () => {
   const [value, setValue] = React.useState(0);
@@ -26,11 +27,26 @@ const MobileNav = () => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Home" icon={<HomeOutlinedIcon />} />
-        <BottomNavigationAction label="Search" icon={<SearchIcon />} />
         <BottomNavigationAction
+          component={Link}
+          to={'/'}
+          value="home"
+          label="Home"
+          icon={<HomeIcon />}
+        />
+        <BottomNavigationAction
+          component={Link}
+          to={'/search'}
+          value="seach"
+          label="Search"
+          icon={<SearchIcon />}
+        />
+        <BottomNavigationAction
+          component={Link}
+          to={'/playlist'}
+          value="playlist"
           label="Library"
-          icon={<FormatListBulletedIcon />}
+          icon={<ListIcon />}
         />
       </BottomNavigation>
     </Box>

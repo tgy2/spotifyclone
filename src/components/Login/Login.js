@@ -17,7 +17,7 @@ const Login = ({}) => {
         style={{ marginBottom: 300, width: '70%', maxWidth: 500 }}
       />
       <Button color="primary" variant="contained" size="large">
-        LOGIN TO SPOTIFY
+        Login to spotify
       </Button>
     </Box>
   );
