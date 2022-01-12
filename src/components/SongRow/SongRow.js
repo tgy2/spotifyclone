@@ -7,7 +7,13 @@ import {
   Box,
 } from '@mui/material';
 
-const SongRow = ({ index, image, title, artist, album, duration, loading }) => {
+const SongRow = ({ spotifyApi, playlistId, track, index, loading }) => {
+  const image = track.album.images[2].url;
+  const title = track.name;
+  const artist = track.artists[0].name;
+  const album = track.album.name;
+  const duration = track.duration_ms / 1000;
+
   const Title = () => {
     return (
       <Box
@@ -29,7 +35,7 @@ const SongRow = ({ index, image, title, artist, album, duration, loading }) => {
   };
 
   const formatTime = value => {
-    const rest = value % 60;
+    const rest = (value % 60).toFixed(0);
     const min = Math.floor(value / 60);
     const seconds = rest < 10 ? `0${rest}` : rest;
     return `${min}:${seconds}`;
@@ -45,7 +51,14 @@ const SongRow = ({ index, image, title, artist, album, duration, loading }) => {
           backgroundColor: '#d8d8d821 !important',
         },
       }}
-      onClick={() => console.log(`Play ${title}`)}
+      onClick={() =>
+        spotifyApi.play({
+          context_uri: `spotify:playlist:${playlistId}`,
+          offset: {
+            position: index,
+          },
+        })
+      }
       hover={true}
     >
       <TableCell>
