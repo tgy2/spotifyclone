@@ -10,25 +10,15 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import SideNavOption from '../SideNavOption/SideNavOption';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const mockPlaylist = [
-  { name: 'Rock', playlistId: 123, image: '/Justin-Bieber.png' },
-  { name: 'Pop', playlistId: 646, image: '/Justin-Bieber.png' },
-  { name: 'Hip hop', playlistId: 834, image: '/Justin-Bieber.png' },
-  { name: 'X-mas', playlistId: 5503, image: '/Justin-Bieber.png' },
-  { name: 'Code life', playlistId: 4832, image: '/Justin-Bieber.png' },
-];
-
-// playlists = [{},{}]
-function SideNav({ playlists }) {
+function SideNav({ items, loading }) {
   const history = useHistory();
 
   const renderPlaylists = () => {
     // Make sure laoding state works
-    if (playlists === null) return 'Loading';
-    return playlists.map((playlist, i) => (
-      <SideNavOption {...playlist} key={i} />
-    ));
+    if (loading) return 'Loading';
+    return items.map((playlist, i) => <SideNavOption {...playlist} key={i} />);
   };
 
   return (
@@ -75,4 +65,9 @@ function SideNav({ playlists }) {
   );
 }
 
-export default SideNav;
+const mapState = state => {
+  const { items, loading } = state.playlist;
+  return { items, loading };
+};
+
+export default connect(mapState)(SideNav);
