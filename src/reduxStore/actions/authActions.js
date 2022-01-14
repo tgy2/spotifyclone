@@ -1,16 +1,19 @@
 import * as actionTypes from './actionTypes';
 import { getAccessToken } from '../../login-to-spotify';
 
-const fetchTokenStart = () => {
+export const fetchTokenStart = () => {
   return { type: actionTypes.AUTH_START };
 };
 
-const fetchTokenFail = error => {
+export const fetchTokenFail = error => {
   return { type: actionTypes.AUTH_FAIL, payload: error };
 };
 
-const fetchTokenSuccess = data => {
-  return { type: actionTypes.AUTH_SUCCESS, payload: data };
+export const fetchTokenSuccess = data => {
+  return {
+    type: actionTypes.AUTH_SUCCESS,
+    payload: data,
+  };
 };
 
 export const fetchToken = () => {
@@ -25,17 +28,19 @@ export const fetchToken = () => {
   };
 };
 
-// User
-const fetchUserStart = () => {
+export const fetchUserStart = () => {
   return { type: actionTypes.FETCH_CURRENT_USER_START };
 };
 
-const fetchUserFail = error => {
+export const fetchUserFail = error => {
   return { type: actionTypes.FETCH_CURRENT_USER_FAIL, payload: error };
 };
 
-const fetchUserSuccess = data => {
-  return { type: actionTypes.FETCH_CURRENT_USER_SUCCESS, payload: data };
+export const fetchUserSuccess = data => {
+  return {
+    type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
+    payload: data,
+  };
 };
 
 export const fetchUser = spotifyApi => {

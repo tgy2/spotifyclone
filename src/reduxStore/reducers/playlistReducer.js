@@ -11,23 +11,22 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_PLAYLIST_START:
       return {
         ...state,
-        loading: true,
         error: null,
+        loading: true,
       };
     case actionTypes.FETCH_PLAYLIST_SUCCESS:
       return {
         ...state,
-        loading: false,
         error: null,
+        loading: false,
         items: action.payload,
       };
     case actionTypes.FETCH_PLAYLIST_FAIL:
       return {
         ...state,
-        loading: false,
         error: action.payload,
+        loading: false,
       };
-
     default:
       return state;
   }

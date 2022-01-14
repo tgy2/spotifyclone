@@ -38,6 +38,7 @@ function SideNav({ items, loading }) {
         style={{ marginLeft: 16, marginTop: 24 }}
         src="/Spotify_Logo.png"
         width={130}
+        alt="Spotify"
       />
       <Box sx={{ width: '100%', maxWidth: 360, color: 'white' }}>
         <List>
@@ -67,7 +68,10 @@ function SideNav({ items, loading }) {
 
 const mapState = state => {
   const { items, loading } = state.playlist;
-  return { items, loading };
+  return {
+    items,
+    loading,
+  };
 };
 
 export default connect(mapState)(SideNav);
