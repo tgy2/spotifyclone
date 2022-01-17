@@ -11,12 +11,12 @@ import Login from './Login/Login';
 import {
   fetchUser,
   fetchPlaylist,
-  addDeviceId,
+  addDevice,
 } from '../reduxStore/actions/index';
 
 const spotifyApi = new SpotifyWebApi();
 
-const setupSpotifyConnect = (token, addDeviceId) => {
+const setupSpotifyConnect = (token, addDevice) => {
   const player = new window.Spotify.Player({
     name: 'Web Playback SDK Quick Start Player',
     getOAuthToken: cb => {
@@ -28,7 +28,8 @@ const setupSpotifyConnect = (token, addDeviceId) => {
   // Ready
   player.addListener('ready', ({ device_id }) => {
     console.log('Ready with Device ID', device_id);
-    addDeviceId(device_id);
+    addDevice(device_id);
+
     spotifyApi.transferMyPlayback([device_id]);
   });
 
@@ -52,13 +53,13 @@ const setupSpotifyConnect = (token, addDeviceId) => {
   player.connect();
 };
 
-const ScreenRoot = ({ token, fetchUser, fetchPlaylist, addDeviceId }) => {
+const ScreenRoot = ({ token, fetchUser, fetchPlaylist, addDevice }) => {
   useEffect(() => {
     // Set up spotify:
     spotifyApi.setAccessToken(token);
 
     window.onSpotifyWebPlaybackSDKReady = () => {
-      setupSpotifyConnect(token, addDeviceId);
+      setupSpotifyConnect(token, addDevice);
     };
 
     const getData = async () => {
@@ -100,7 +101,7 @@ const mapDispatch = dispatch => {
   return {
     fetchUser: data => dispatch(fetchUser(data)),
     fetchPlaylist: data => dispatch(fetchPlaylist(data)),
-    addDeviceId: id => dispatch(addDeviceId(id)),
+    addDevice: device_id => dispatch(addDevice(device_id)),
   };
 };
 

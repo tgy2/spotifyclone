@@ -14,53 +14,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SongRow from '../SongRow/SongRow';
+import { connect } from 'react-redux';
 
-const mockSongs = [
-  {
-    image: '/Justin-Bieber.png',
-    title: 'Holy',
-    artist: 'Justin Bieber',
-    album: 'No clue',
-    duration: 180,
-  },
-  {
-    image: '/Justin-Bieber.png',
-    title: 'Holy',
-    artist: 'Justin Bieber',
-    album: 'No clue',
-    duration: 154,
-  },
-  {
-    image: '/Justin-Bieber.png',
-    title: 'Holy',
-    artist: 'Justin Bieber',
-    album: 'No clue',
-    duration: 180,
-  },
-  {
-    image: '/Justin-Bieber.png',
-    title: 'Holy',
-    artist: 'Justin Bieber',
-    album: 'No clue',
-    duration: 124,
-  },
-  {
-    image: '/Justin-Bieber.png',
-    title: 'Holy',
-    artist: 'Justin Bieber',
-    album: 'No clue',
-    duration: 180,
-  },
-  {
-    image: '/Justin-Bieber.png',
-    title: 'Holy',
-    artist: 'Justin Bieber',
-    album: 'No clue',
-    duration: 180,
-  },
-];
-
-const Playlist = ({ spotifyApi }) => {
+const Playlist = ({ spotifyApi, loading }) => {
   const { playlistId } = useParams();
   const [playlistInfo, setPlaylistInfo] = useState();
   const [songs, setSongs] = useState([]);
@@ -82,9 +38,9 @@ const Playlist = ({ spotifyApi }) => {
   // api som använder playlistId
 
   const renderSongRows = () => {
-    if (!songs)
+    if (loading)
       return [1, 2, 3, 4, 5, 6].map((e, i) => (
-        <SongRow loading={true} key={i} />
+        <SongRow loading={true} key={i} index={i} />
       ));
     return songs.map((song, i) => (
       <SongRow
@@ -168,4 +124,11 @@ const Playlist = ({ spotifyApi }) => {
     </Box>
   );
 };
-export default Playlist;
+
+const mapState = state => {
+  return {
+    loading: state.playlist.loading,
+  };
+};
+
+export default connect(mapState)(Playlist);
