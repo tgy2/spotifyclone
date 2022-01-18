@@ -7,7 +7,7 @@ import {
   Box,
 } from '@mui/material';
 import { connect } from 'react-redux';
-import { play, updateSongInfo } from '../../reduxStore/actions/index';
+import { playNewSong } from '../../reduxStore/actions/index';
 
 const SongRow = ({
   spotifyApi,
@@ -15,8 +15,7 @@ const SongRow = ({
   track,
   index,
   loading,
-  play,
-  updateSongInfo,
+  playNewSong,
 }) => {
   const style = {
     '& td': { border: 0 },
@@ -91,14 +90,13 @@ const SongRow = ({
   };
 
   const onRowClick = async () => {
-    await spotifyApi.play({
+    const song = {
       context_uri: `spotify:playlist:${playlistId}`,
       offset: {
         position: index,
       },
-    });
-    play();
-    updateSongInfo(spotifyApi);
+    };
+    playNewSong(spotifyApi, song);
   };
 
   return (
@@ -131,8 +129,7 @@ const SongRow = ({
 
 const mapDispatch = dispatch => {
   return {
-    play: () => dispatch(play()),
-    updateSongInfo: api => dispatch(updateSongInfo(api)),
+    playNewSong: (api, song) => dispatch(playNewSong(api, song)),
   };
 };
 

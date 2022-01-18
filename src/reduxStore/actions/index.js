@@ -6,4 +6,6 @@ export {
   pause,
   updateSongInfoStart,
   updateSongInfo,
+  playNewSong,
+  setProgress,
 } from './player';
