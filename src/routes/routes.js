@@ -1,5 +1,6 @@
 import Libary from '../components/Library/Library';
 import Playlist from '../components/Playlist/Playlist';
+import Search from '../components/Search/Search';
 
 const NoMatch = () => {
   return <div>404</div>;
@@ -7,10 +8,6 @@ const NoMatch = () => {
 
 const Home = () => {
   return <div>Home</div>;
-};
-
-const Search = () => {
-  return <div>Search</div>;
 };
 
 export const ROUTES = [

@@ -56,10 +56,10 @@ const SongRow = ({
     );
   }
 
+  const album = track.album.name;
   const image = track.album.images[2].url;
   const title = track.name;
   const artist = track.artists[0].name;
-  const album = track.album.name;
   const duration = track.duration_ms / 1000;
 
   const Title = () => {
