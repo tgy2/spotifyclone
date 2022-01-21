@@ -20,10 +20,21 @@ const Playlist = ({ spotifyApi, loading }) => {
 
       const allSongs = await spotifyApi.getPlaylistTracks(playlistId);
       console.log(allSongs.body.items);
-      setSongs(allSongs.body.items);
+      const formattedSongs = formatSongData(allSongs.body.items);
+      setSongs(formattedSongs);
     };
     getData();
   }, [playlistId]);
+
+  const formatSongData = songsInPlaylist => {
+    return songsInPlaylist.map((song, i) => {
+      console.log(song);
+      const { track } = song;
+      track.contextUri = `spotify:playlist:${playlistId}`;
+      track.position = i;
+      return { track };
+    });
+  };
 
   return (
     <Box

@@ -8,21 +8,25 @@ import {
 } from '@mui/material';
 import SongRow from '../SongRow/SongRow';
 
-const TableOfSongs = ({ loading, spotifyApi, playlistId, songs }) => {
+const TableOfSongs = ({ loading, spotifyApi, songs }) => {
   const renderSongRows = () => {
     if (loading)
       return [1, 2, 3, 4, 5, 6].map((e, i) => (
         <SongRow loading={true} key={i} index={i} />
       ));
-    return songs.map((song, i) => (
-      <SongRow
-        spotifyApi={spotifyApi}
-        playlistId={playlistId}
-        {...song}
-        key={i}
-        index={i}
-      />
-    ));
+    return songs.map((song, i) => {
+      console.log(song);
+      return (
+        <SongRow
+          spotifyApi={spotifyApi}
+          {...song}
+          position={song.track.position}
+          contextUri={song.track.contextUri}
+          key={i}
+          index={i}
+        />
+      );
+    });
   };
 
   return (

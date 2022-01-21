@@ -1,7 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setProgress } from '../../reduxStore/actions/index';
-import debounce from 'lodash.debounce';
 import { Stack, Typography, Slider } from '@mui/material';
 
 const sliderStyle = {
@@ -46,7 +45,6 @@ const SongProgress = ({
     }
     return () => {
       clearInterval(interval);
-      progressSong.cancel();
     };
   }, [playing, progress]);
 
@@ -57,31 +55,8 @@ const SongProgress = ({
     return `${min}:${seconds}`;
   };
 
-  // 1. Wrapp api call to spotify so we can log the value
-  const apiCall = v => {
-    console.log(v);
-    spotifyApi.seek(v * 1000);
-  };
-
-  // 2. Create a callback function that we will send to useMemo();
-  const debouncedApiCall = v => {
-    // 3. Return a debounced version of apiCall()
-    console.log(v);
-    return debounce(v => apiCall(v), 1000, {
-      leading: false,
-      trailing: true,
-    });
-  };
-
-  const progressSong = useMemo(v => debouncedApiCall(v), []);
-
-  // 4. Store the value of our memoized function in a function/variable called progressSong
-
   const handleOnChange = (e, v) => {
     setProgress(v);
-    // 5. Call the memoized function that in turn uses a debounced version of apiCall();
-    console.log(v);
-    progressSong(v);
   };
 
   return (
@@ -97,6 +72,7 @@ const SongProgress = ({
         value={progress}
         aria-label="Default"
         onChange={handleOnChange}
+        onChangeCommitted={(e, v) => spotifyApi.seek(v * 1000)}
       />
       <Typography variant="body1" sx={{ color: 'text.secondary' }}>
         {formatTime(duration)}
